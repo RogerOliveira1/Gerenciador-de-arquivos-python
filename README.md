@@ -15,7 +15,7 @@ Um gerenciador de arquivos completo com interface gráfica moderna e intuitiva, 
 ✅ Acesso rápido a pastas comuns como **Downloads**, **Documentos**, **Imagens**  
 ✅ Lista com detalhes: nome, tipo, tamanho, data de modificação  
 ✅ Campo para digitar manualmente o caminho  
-✅ Ações: Copiar, Mover, Renomear, Excluir e Abrir  
+✅ Ações: Copiar, Mover, Renomear, Excluir, Abrir e Sair 
 ✅ Sistema de logs automáticos para acompanhar ações  
 ✅ Totalmente feito com Python
 

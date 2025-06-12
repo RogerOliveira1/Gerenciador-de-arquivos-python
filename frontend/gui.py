@@ -122,7 +122,7 @@ class FileManagerGUI(ctk.CTk):
         # Botões de operação
         self.button_frame = ctk.CTkFrame(self)
         self.button_frame.grid(row=2, column=1, padx=20, pady=10, sticky="ew")
-        self.button_frame.grid_columnconfigure((0, 1, 2, 3, 4), weight=1)
+        self.button_frame.grid_columnconfigure((0, 1, 2, 3, 4, 5), weight=1)
 
         self.copy_button = ctk.CTkButton(self.button_frame, text="Copiar", command=self.copy_action, font=self.default_font)
         self.copy_button.grid(row=0, column=0, padx=10, pady=10)
@@ -138,6 +138,9 @@ class FileManagerGUI(ctk.CTk):
 
         self.open_button = ctk.CTkButton(self.button_frame, text="Abrir", command=self.open_action, font=self.default_font)
         self.open_button.grid(row=0, column=4, padx=10, pady=10)
+        
+        self.exit_button = ctk.CTkButton(self.button_frame,text="Sair",command=self.quit,font=self.default_font)
+        self.exit_button.grid(row=0, column=5, padx=10, pady=10)
 
         # Label para mensagens de status
         self.status_label = ctk.CTkLabel(self, text="", text_color="green", font=self.default_font)
