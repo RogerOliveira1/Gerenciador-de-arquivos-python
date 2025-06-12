@@ -1,3 +1,4 @@
+from tkinter import messagebox
 import customtkinter as ctk
 import os
 import shutil
@@ -11,6 +12,10 @@ from backend.logger import AppLogger
 class FileManagerGUI(ctk.CTk):
     def __init__(self):
         super().__init__()
+        
+        self.destination_selection_mode = False
+        self.source_path_to_move = None
+        self.confirm_destination_button = None
 
         self.file_operations = FileOperations()
         self.drive_detector = DriveDetector()
@@ -204,6 +209,8 @@ class FileManagerGUI(ctk.CTk):
                     self.tree.delete(*self.tree.get_children(selected_item)) # Limpa placeholders
                     self.populate_directory_tree(selected_item, path)
                     self.tree.item(selected_item, open=True)
+                    if self.destination_selection_mode:
+                        self.tree.selection_set(selected_item)  # destaca a seleção
 
     def load_directory(self, path):
         self.current_path = path
@@ -308,17 +315,44 @@ class FileManagerGUI(ctk.CTk):
             self.display_message("Não é possível mover o diretório pai.", is_error=True)
             return
 
-        destination_dir = filedialog.askdirectory(title="Selecionar Pasta de Destino para Mover")
-        if not destination_dir:
-            self.display_message("Operação de mover cancelada.")
+        self.display_message("Selecione o diretório de destino na árvore lateral e clique em 'Confirmar destino'")
+        self.destination_selection_mode = True
+        self.source_path_to_move = source_path
+
+        if not self.confirm_destination_button:
+            self.confirm_destination_button = ctk.CTkButton(
+                self.sidebar_frame,
+                text="Confirmar destino",
+                command=self.confirm_move_destination,
+                font=self.default_font
+            )
+            self.confirm_destination_button.grid(row=2, column=0, padx=10, pady=10, sticky="ew") # Sempre recarrega o diretório de origem após mover
+    
+    def confirm_move_destination(self):
+        selected_item = self.tree.focus()
+        if not selected_item:
+            self.display_message("Selecione um destino válido.", is_error=True)
             return
 
-        destination_path = os.path.join(destination_dir, source_name)
+        dest_path = self.tree.item(selected_item, "values")[0]
+        if not os.path.isdir(dest_path):
+            self.display_message("Destino inválido.", is_error=True)
+            return
 
-        success, message = self.file_operations.move_file(source_path, destination_path)
+        filename = os.path.basename(self.source_path_to_move)
+        destination = os.path.join(dest_path, filename)
+
+        success, message = self.file_operations.move_file(self.source_path_to_move, destination)
         self.display_message(message, not success)
-        if success:
-            self.load_directory(self.current_path) # Sempre recarrega o diretório de origem após mover
+
+        # Reset
+        self.destination_selection_mode = False
+        self.source_path_to_move = None
+        if self.confirm_destination_button:
+            self.confirm_destination_button.destroy()
+            self.confirm_destination_button = None
+
+        self.load_directory(self.current_path)  # Atualiza pasta atual        
 
     def rename_action(self):
         selected_item = self.file_tree.focus()
@@ -360,11 +394,12 @@ class FileManagerGUI(ctk.CTk):
             return
 
         # Diálogo de confirmação
-        msg_box = ctk.CTkMessagebox(title="Confirmar Exclusão", message=f"Tem certeza que deseja excluir \"{item_name}\"? Esta ação não pode ser desfeita.",
-                                    icon="warning", option_1="Cancelar", option_2="Excluir")
-        response = msg_box.get()
+        response = messagebox.askquestion(
+            "Confirmar Exclusão",
+            f"Tem certeza que deseja excluir \"{item_name}\"? Esta ação não pode ser desfeita."
+        )
 
-        if response == "Excluir":
+        if response == "yes":
             success, message = self.file_operations.delete_file(item_path)
             self.display_message(message, not success)
             if success:

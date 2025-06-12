@@ -1,1 +1,6 @@
 2025-06-06 20:42:33,819 - FileManager - INFO - Arquivo renomeado de 'C:\Users\edupd\Downloads\8554038e6633b5af.png' para 'C:\Users\edupd\Downloads\macaco'
+2025-06-12 14:33:44,829 - FileManager - INFO - Arquivo movido de 'C:\Users\roger\Downloads\aaaaa.txt' para 'C:\Users\roger\Onedrive//Documents\aaaaa.txt'
+2025-06-12 14:34:56,106 - FileManager - INFO - Arquivo movido de 'C:\Users\roger\Onedrive//Documents\aaaaa.txt' para 'C:\Users\roger\Downloads\aaaaa.txt'
+2025-06-12 14:35:18,768 - FileManager - INFO - Arquivo renomeado de 'C:\Users\roger\Downloads\aaaaa.txt' para 'C:\Users\roger\Downloads\roger'
+2025-06-12 14:39:20,130 - FileManager - INFO - Arquivo 'C:\Users\roger\Downloads\roger' excluído com sucesso.
+2025-06-12 14:46:59,822 - FileManager - INFO - Arquivo 'C:\Users\roger\Downloads\seletor_personalizado_interno.txt' excluído com sucesso.
