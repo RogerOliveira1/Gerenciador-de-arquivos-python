@@ -1,0 +1,16 @@
+# 🐍 Ignorar arquivos Python compilados
+__pycache__/
+*.py[cod]
+*$py.class
+
+# 🔧 Configurações do VSCode
+.vscode/
+
+# 📜 Arquivo de log do seu sistema
+FileManagerLog.txt
+
+# 🗑️ Arquivos temporários ou ocultos
+*.log
+*.tmp
+.DS_Store
+Thumbs.db
