@@ -1,7 +1,3 @@
-<<<<<<< HEAD
-# Gerenciador-de-arquivos-python
-Gerenciador de Arquivos com Interface Gráfica - Python + CustomTkinter
-=======
 # 📁 Gerenciador de Arquivos com Interface Moderna em Python
 
 ![Badge](https://img.shields.io/badge/Feito%20com-Python%203.10-blue)
@@ -27,7 +23,7 @@ Um gerenciador de arquivos completo com interface gráfica moderna e intuitiva, 
 
 ## 🖼️ Captura de Tela
 
-![Screenshot](docs/Captura de tela 2025-06-12 135030.png)
+![Screenshot](docs/screenshot.png)
 
 ---
 
@@ -46,4 +42,51 @@ Um gerenciador de arquivos completo com interface gráfica moderna e intuitiva, 
 ```bash
 git clone https://github.com/RogerOliveira1/Gerenciador-de-arquivos-python.git
 cd Gerenciador-de-arquivos-python
->>>>>>> ea59b99a2e739b0599d174c739ab9756f5022a52
+```
+
+### 2. Instale as dependências:
+```bash
+pip install -r requirements.txt
+```
+
+### 3. Execute a aplicação:
+```bash
+python main.py
+```
+
+---
+
+## 📂 Estrutura de Pastas
+
+```
+Gerenciador-de-arquivos-python/
+├── main.py                     # Arquivo principal que inicia o app
+├── requirements.txt            # Dependências do projeto
+├── frontend/
+│   └── gui.py                  # Interface gráfica
+├── backend/
+│   ├── file_operations.py      # Lógica de copiar, mover, renomear, excluir
+│   ├── drive_detector.py       # Detecção de discos e unidades
+│   └── logger.py               # Sistema de logs
+└── docs/
+    └── screenshot.png          # Imagem de demonstração
+```
+
+---
+
+## 🙋‍♂️ Autor
+
+**Roger Oliveira**  
+🔗 [GitHub](https://github.com/RogerOliveira1)
+
+---
+
+## 📃 Licença
+
+Este projeto está sob a licença MIT. Veja o arquivo [LICENSE](LICENSE) para mais detalhes.
+
+---
+
+## ⭐ Contribua
+
+Sinta-se à vontade para dar um ⭐ se este projeto te ajudou, ou envie um pull request para contribuir!
