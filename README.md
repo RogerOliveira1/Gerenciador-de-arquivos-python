@@ -78,7 +78,7 @@ Gerenciador-de-arquivos-python/
 
 **Roger Oliveira**  
 **Eduardo Drozdz**  
-**Leandro**    
+**Leandro Guerra**    
 🔗 [GitHub](https://github.com/RogerOliveira1)
 
 ---
