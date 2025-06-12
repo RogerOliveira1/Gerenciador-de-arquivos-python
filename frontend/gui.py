@@ -13,6 +13,7 @@ class FileManagerGUI(ctk.CTk):
     def __init__(self):
         super().__init__()
         
+        self.source_path_to_copy = None
         self.destination_selection_mode = False
         self.source_path_to_move = None
         self.confirm_destination_button = None
@@ -157,7 +158,7 @@ class FileManagerGUI(ctk.CTk):
             "Área de Trabalho": os.path.join(os.path.expanduser("~"), "Desktop"),
             "Downloads": os.path.join(os.path.expanduser("~"), "Downloads"),
             "Documentos": os.path.join(os.path.expanduser("~"), "Onedrive//Documents"),
-            "Imagens": os.path.join(os.path.expanduser("~"), "Pictures"),
+            "Imagens": os.path.join(os.path.expanduser("~"), "OneDrive//Pictures"),
             "Músicas": os.path.join(os.path.expanduser("~"), "Music"),
             "Vídeos": os.path.join(os.path.expanduser("~"), "Videos"),
         }
@@ -283,24 +284,48 @@ class FileManagerGUI(ctk.CTk):
         source_name = self.file_tree.item(selected_item, "text")
         source_path = os.path.join(self.current_path, source_name)
 
-        if source_name == "..": # Não permite copiar o diretório pai
+        if source_name == "..":
             self.display_message("Não é possível copiar o diretório pai.", is_error=True)
             return
 
-        # Diálogo para selecionar o diretório de destino
-        destination_dir = filedialog.askdirectory(title="Selecionar Pasta de Destino para Cópia")
-        if not destination_dir:
-            self.display_message("Operação de cópia cancelada.")
+        self.display_message("Selecione o diretório de destino na árvore lateral e clique em 'Confirmar cópia'")
+        self.destination_selection_mode = "copy"
+        self.source_path_to_copy = source_path
+
+        if not self.confirm_destination_button:
+            self.confirm_destination_button = ctk.CTkButton(
+                self.sidebar_frame,
+                text="Colar neste destino",
+                command=self.confirm_copy_destination,
+                font=self.default_font
+            )
+            self.confirm_destination_button.grid(row=2, column=0, padx=10, pady=10, sticky="ew")
+
+    def confirm_copy_destination(self):
+        selected_item = self.tree.focus()
+        if not selected_item:
+            self.display_message("Selecione um destino válido.", is_error=True)
             return
 
-        destination_path = os.path.join(destination_dir, source_name)
+        dest_path = self.tree.item(selected_item, "values")[0]
+        if not os.path.isdir(dest_path):
+            self.display_message("Destino inválido.", is_error=True)
+            return
 
-        success, message = self.file_operations.copy_file(source_path, destination_path)
+        filename = os.path.basename(self.source_path_to_copy)
+        destination = os.path.join(dest_path, filename)
+
+        success, message = self.file_operations.copy_file(self.source_path_to_copy, destination)
         self.display_message(message, not success)
-        if success:
-            # Se o destino for o diretório atual, recarrega para mostrar o arquivo copiado
-            if os.path.commonpath([self.current_path, destination_dir]) == self.current_path:
-                self.load_directory(self.current_path)
+
+        # Reset
+        self.destination_selection_mode = False
+        self.source_path_to_copy = None
+        if self.confirm_destination_button:
+            self.confirm_destination_button.destroy()
+            self.confirm_destination_button = None
+
+        self.load_directory(self.current_path)            
 
     def move_action(self):
         selected_item = self.file_tree.focus()
