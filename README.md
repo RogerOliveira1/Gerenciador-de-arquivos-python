@@ -76,7 +76,9 @@ Gerenciador-de-arquivos-python/
 
 ## 🙋‍♂️ Autor
 
-**Roger Oliveira**  
+**Roger Oliveira**
+**Eduardo Drozdz**
+**Leandro**  
 🔗 [GitHub](https://github.com/RogerOliveira1)
 
 ---
