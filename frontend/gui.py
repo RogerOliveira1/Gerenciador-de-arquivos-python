@@ -421,26 +421,48 @@ class FileManagerGUI(ctk.CTk):
             self.display_message("Não é possível excluir o diretório pai.", is_error=True)
             return
 
-        # Diálogo de confirmação
-        response = messagebox.askquestion(
-            "Confirmar Exclusão",
-            f"Tem certeza que deseja excluir \"{item_name}\"? Esta ação não pode ser desfeita."
-        )
+        self.show_delete_confirmation(item_name, item_path)
 
-        if response == "yes":
+    def on_path_enter(self, event):
+            new_path = self.path_entry.get()
+            if os.path.isdir(new_path):
+                self.load_directory(new_path)
+            else:
+                self.display_message("Caminho inválido ou inacessível.", is_error=True)
+                
+    def show_delete_confirmation(self, item_name, item_path):
+        popup = ctk.CTkToplevel(self)
+        popup.title("Confirmar Exclusão")
+        popup.geometry("400x180")
+        popup.grab_set()
+
+        label = ctk.CTkLabel(
+            popup,
+            text=f"Tem certeza que deseja excluir '{item_name}'?\nEsta ação não pode ser desfeita.",
+            wraplength=350,
+            justify="center",
+            font=self.default_font
+        )
+        label.pack(pady=20)
+
+        button_frame = ctk.CTkFrame(popup)
+        button_frame.pack(pady=10)
+
+        def confirmar():
             success, message = self.file_operations.delete_file(item_path)
             self.display_message(message, not success)
             if success:
                 self.load_directory(self.current_path)
-        else:
+            popup.destroy()
+
+        def cancelar():
             self.display_message("Operação de exclusão cancelada.")
-    
-    def on_path_enter(self, event):
-        new_path = self.path_entry.get()
-        if os.path.isdir(new_path):
-            self.load_directory(new_path)
-        else:
-            self.display_message("Caminho inválido ou inacessível.", is_error=True)
+            popup.destroy()
+
+        btn_sim = ctk.CTkButton(button_frame, text="Sim", command=confirmar, width=100)
+        btn_nao = ctk.CTkButton(button_frame, text="Não", command=cancelar, width=100)
+        btn_sim.grid(row=0, column=0, padx=10)
+        btn_nao.grid(row=0, column=1, padx=10)                
             
     def open_action(self):
         selected_item = self.file_tree.focus()
