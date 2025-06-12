@@ -23,7 +23,7 @@ Um gerenciador de arquivos completo com interface gráfica moderna e intuitiva, 
 
 ## 🖼️ Captura de Tela
 
-![Screenshot](docs/screenshot.png)
+![Screenshot](docs/vista.png)
 
 ---
 
