@@ -74,7 +74,7 @@ Gerenciador-de-arquivos-python/
 
 ---
 
-## 🙋‍♂️ Autores
+## 🙋‍♂️ Autores  
 
 **Roger Oliveira**  
 **Eduardo Drozdz**  
